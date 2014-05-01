@@ -1,6 +1,8 @@
 <html>
     <head>
         <title>Backbonejs sandbox</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet">
         <link href="css/styles.css" rel="stylesheet">
         <script type="text/javascript" src="js/lib/jquery-2.1.0.min.js"></script>
         <script type="text/javascript" src="js/lib/underscore.js"></script>
@@ -8,14 +10,29 @@
         <script type="text/javascript" src="js/models/creature.js"></script>
         <script type="text/javascript" src="js/collections/creatures.js"></script>
         <script type="text/javascript" src="js/views/creature-view.js"></script>
+        <script type="text/javascript" src="js/views/detail-view.js"></script>
         <script type="text/javascript" src="js/views/app-view.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
     </head>
     <body>
-        <div id="map"></div>
+        <div id="map">
+            <!-- creatures are added here-->
+        </div>
         <div id="sidebar">
             <h1>Creatures</h1>
+            <button id="next-turn">Next Turn</button>
             <p id="total">total: <span>$0</span></p>
+            <table id="details" class="table table-striped">
+                <thead>
+                    <th>Name</th>
+                    <th>HP</th>
+                    <th>MaxHP</th>
+                    <th>Position</th>
+                </thead>
+                <tbody>
+                    <!-- creatures details are added here-->
+                </tbody>
+            </table>
         </div>
     </body>
 </html>
