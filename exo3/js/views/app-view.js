@@ -13,16 +13,20 @@ $(function(){
         initialize: function(){
 
             this.total = $('#total span');
-            this.list = $('#map');
+            this.map = $('#map');
+            this.details = $('#details tbody');
 
             this.listenTo(app.creatures, 'change', this.render);
 
             app.creatures.each(function(creature){
-
+                // add map view
                 var view = new app.CreatureView({ model: creature });
-                this.list.append(view.render().el);
+                this.map.append(view.render().el);
                 // TODO : to fix original position
                 view.render();
+                // add detail view
+                var detailView = new app.DetailView({ model: creature });
+                this.details.append(detailView.render().el);
 
             }, this);
         },

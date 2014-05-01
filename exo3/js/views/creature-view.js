@@ -31,8 +31,6 @@ $(function(){
             this.$el.css('width', tileSize);
             this.$el.css('height', tileSize);
 
-            console.log(posX + ' ' + posY); 
-
             return this;
         },
 
