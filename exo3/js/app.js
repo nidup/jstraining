@@ -11,5 +11,7 @@ $(function(){
         new app.Creature({ name: 'Baz', hp: 100, posX: 4, posY:5}),
     ]);
 
+    app.game = new app.Game();
+
     new app.AppView();
 });

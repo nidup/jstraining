@@ -9,6 +9,7 @@
         <script type="text/javascript" src="js/lib/backbone.js"></script>
         <script type="text/javascript" src="js/models/creature.js"></script>
         <script type="text/javascript" src="js/collections/creatures.js"></script>
+        <script type="text/javascript" src="js/models/game.js"></script>
         <script type="text/javascript" src="js/views/creature-view.js"></script>
         <script type="text/javascript" src="js/views/detail-view.js"></script>
         <script type="text/javascript" src="js/views/app-view.js"></script>
@@ -19,9 +20,10 @@
             <!-- creatures are added here-->
         </div>
         <div id="sidebar">
-            <h1>Creatures</h1>
-            <button id="next-turn">Next Turn</button>
-            <p id="total">total: <span>$0</span></p>
+
+            <button type="button" id="next-turn" class="btn btn-primary">Next Turn</button>
+            <button type="button" id="add-creature" class="btn btn-default">Default</button>
+
             <table id="details" class="table table-striped">
                 <thead>
                     <th>Name</th>
@@ -33,6 +35,11 @@
                     <!-- creatures details are added here-->
                 </tbody>
             </table>
+
+
+            <p id="total">total: <span>$0</span></p>
+
+
         </div>
     </body>
 </html>

@@ -19,6 +19,12 @@ $(function(){
                 + '<td>' + this.model.get('maxHp') + '</td>'
                 + '<td>' + this.model.get('posX') + '-' + this.model.get('posY') + '</td>'
             );
+            this.$el.removeClass('warning danger');
+            if (this.model.isDead()) {
+                this.$el.addClass( 'danger');
+            } else if(this.model.isHurted()) {
+                this.$el.addClass( 'warning');
+            }
 
             return this;
         }
