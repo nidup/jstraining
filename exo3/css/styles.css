@@ -15,13 +15,26 @@ div#sidebar {
 }
 div.creature {
     display: block;
-    width: 30px;
-    height: 30px;
-    border: 1px solid grey;
-    background-color: pink;
+    width: 20px;
+    height: 20px;
     font-size: 10px;
-    position: relative;
+    position: absolute;
+    background-image: url(../img/creature.png);
 }
 div.creature span {
     display: block;
+}
+div.tile {
+    position: absolute;
+    margin:0px;
+    padding:0px;
+}
+div.tile.trees {
+    background-image: url(../img/trees.png);
+}
+div.tile.snow {
+    background-image: url(../img/snow.png);
+}
+div.tile.rock {
+    background-image: url(../img/rock.png);
 }
