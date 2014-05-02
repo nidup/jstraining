@@ -4,7 +4,7 @@ var app = app || {};
 $(function(){
 	'use strict';
 
-    var tileSize = 30;
+    var tileSize = 20;
 
     // This view turns a Creature model into HTML
     app.CreatureView = Backbone.View.extend({

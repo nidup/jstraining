@@ -16,6 +16,9 @@ $(function(){
             this.map = $('#map');
             this.details = $('#details tbody');
 
+            this.initializeMap(this.map);
+
+
             this.listenTo(app.creatures, 'change', this.render);
 
             app.creatures.each(function(creature){
@@ -31,6 +34,32 @@ $(function(){
             }, this);
         },
 
+        initializeMap: function(mapDiv){
+            var y = 0;
+            var tileSize = app.game.get('tileSize');
+            _.each(app.game.get('tiles'), function(row) {
+                var x = 0;
+                 _.each(row, function(cell) {
+                     var tileDiv = $(document.createElement("div"));
+                     tileDiv.addClass('tile');
+                     if (cell === '#') {
+                         tileDiv.addClass('trees');
+                     } else if (cell === 'o') {
+                         tileDiv.addClass('rock');
+                     } else {
+                         tileDiv.addClass('snow');
+                     }
+                     tileDiv.css('width', tileSize);
+                     tileDiv.css('height', tileSize);
+                     var posX = x*tileSize;
+                     var posY = y*tileSize;
+                     tileDiv.offset({left: posX, top: posY});
+                     tileDiv.appendTo(mapDiv);
+                     x++;
+                 });
+                 y++;
+            });
+        },
         render: function(){
 
             var total = 0;
