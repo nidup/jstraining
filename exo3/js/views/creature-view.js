@@ -22,7 +22,7 @@ $(function(){
             this.$el.html(
                 '<div class="creature">'
                 + '<span>' + this.model.get('name') + '</span>'
-                + '<span>' + this.model.get('hp') + '</span>'
+                + '<span>' + this.model.getEnergy() + '</span>'
                 + '</div>'
             );
             var posX = this.model.get('posX') * tileSize;

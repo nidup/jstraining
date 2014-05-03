@@ -64,7 +64,7 @@ $(function(){
 
             var total = 0;
             _.each(app.creatures.getChecked(), function(elem){
-                total += elem.get('hp');
+                total += elem.getEnergy();
             });
             this.total.text('$'+total);
 

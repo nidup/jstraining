@@ -15,8 +15,7 @@ $(function(){
         render: function(){
             this.$el.html(
                 '<td>' + this.model.get('name') + '</td>'
-                + '<td>' + this.model.get('hp') + '</td>'
-                + '<td>' + this.model.get('maxHp') + '</td>'
+                + '<td>' + this.model.getEnergy() + '</td>'
                 + '<td>' + this.model.get('posX') + '-' + this.model.get('posY') + '</td>'
                 + '<td>' + this.model.get('state').toString() + '</td>'
             );

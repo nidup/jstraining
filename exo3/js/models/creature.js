@@ -8,8 +8,8 @@ $(function(){
     app.Creature = Backbone.Model.extend({
         defaults:{
             name: 'A',
-            hp: 100,
-            maxHp: 100,
+            energy: 100,
+            maxEnergy: 100,
             posX: 1,
             posY: 1,
             checked: false,
@@ -22,13 +22,16 @@ $(function(){
             this.set('checked', !this.get('checked'));
         },
         isHurted: function(){
-            return this.get('hp') < this.get('maxHp') / 4;
+            return this.get('energy') < this.get('maxEnergy') / 4;
         },
         isDead: function(){
-            return this.get('hp') <= 0;
+            return this.get('energy') <= 0;
         },
         executeState: function(){
             this.get('state').execute(this);
+        },
+        getEnergy: function(){
+            return this.get('energy');
         },
         getCompass: function(){
             return {
@@ -73,7 +76,7 @@ $(function(){
             this.set('posY', this.get('posY') + direction.top);
         },
         consumeEnergy: function(energy){
-            this.set('hp', this.get('hp')-energy);
+            this.set('energy', this.get('energy')-energy);
         },
         act: function(){
             this.executeState();
