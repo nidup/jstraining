@@ -7,13 +7,16 @@ $(function(){
     // Creature model
     app.Creature = Backbone.Model.extend({
         defaults:{
-            name: 'My creature',
+            name: 'A',
             hp: 100,
             maxHp: 100,
             posX: 1,
             posY: 1,
-            direction: null,
-            checked: false
+            checked: false,
+            state: null
+        },
+        initialize: function() {
+            this.set('state', new app.ExploreState());
         },
         toggle: function(){
             this.set('checked', !this.get('checked'));
@@ -24,8 +27,8 @@ $(function(){
         isDead: function(){
             return this.get('hp') <= 0;
         },
-        hasDirection: function(){
-            return this.get('direction') !== null;
+        executeState: function(){
+            this.get('state').execute(this);
         },
         getCompass: function(){
             return {
@@ -56,29 +59,24 @@ $(function(){
             var nb = Object.keys(directions).length;
             if (nb > 0) {
                 var idx = Math.floor((Math.random() * nb));
-                this.set('direction', Object.keys(directions)[idx]);
-            } else {
-                this.set('direction', null);
+                return Object.keys(directions)[idx];
             }
+            return null;
         },
-        canMove: function(){
-            var direction = this.get('direction');
+        canMove: function(direction){
             var available = this.getAvailableDirections();
             return available.hasOwnProperty(direction);
         },
-        move: function(){
-            if (this.hasDirection() === false || this.canMove() === false) {
-                this.chooseDirection();
-            }
-            if (this.canMove() === true) {
-                var direction = this.getCompass()[this.get('direction')];
-                this.set('posX', this.get('posX') + direction.left);
-                this.set('posY', this.get('posY') + direction.top);
-            }
+        move: function(direction){
+            var direction = this.getCompass()[direction];
+            this.set('posX', this.get('posX') + direction.left);
+            this.set('posY', this.get('posY') + direction.top);
+        },
+        consumeEnergy: function(energy){
+            this.set('hp', this.get('hp')-energy);
         },
         act: function(){
-            this.move();
-            this.set('hp', this.get('hp')-5);
+            this.executeState();
         }
     });
 });

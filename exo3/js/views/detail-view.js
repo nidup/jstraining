@@ -18,6 +18,7 @@ $(function(){
                 + '<td>' + this.model.get('hp') + '</td>'
                 + '<td>' + this.model.get('maxHp') + '</td>'
                 + '<td>' + this.model.get('posX') + '-' + this.model.get('posY') + '</td>'
+                + '<td>' + this.model.get('state').toString() + '</td>'
             );
             this.$el.removeClass('warning danger');
             if (this.model.isDead()) {
