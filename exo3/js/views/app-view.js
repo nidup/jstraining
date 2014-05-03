@@ -17,9 +17,10 @@ $(function(){
             this.details = $('#details tbody');
 
             this.initializeMap(this.map);
-
-
             this.listenTo(app.creatures, 'change', this.render);
+
+            var view = new app.BaseView({ model: app.base });
+            this.map.append(view.render().el);
 
             app.creatures.each(function(creature){
                 // add map view

@@ -18,6 +18,15 @@ $(function(){
         initialize: function() {
             this.set('state', new app.ExploreState());
         },
+        getEnergy: function(){
+            return this.get('energy');
+        },
+        getPosX: function(){
+            return this.get('posX');
+        },
+        getPosY: function(){
+            return this.get('posY');
+        },
         toggle: function(){
             this.set('checked', !this.get('checked'));
         },
@@ -29,9 +38,6 @@ $(function(){
         },
         executeState: function(){
             this.get('state').execute(this);
-        },
-        getEnergy: function(){
-            return this.get('energy');
         },
         getCompass: function(){
             return {
@@ -49,8 +55,8 @@ $(function(){
             var directions = this.getCompass();
             var availableDirections = {};
             for (var code in directions) {
-                var x = this.get('posX') + directions[code]['left'];
-                var y = this.get('posY') + directions[code]['top'];
+                var x = this.getPosX() + directions[code]['left'];
+                var y = this.getPosY() + directions[code]['top'];
                 if (x >= 0 && y >= 0 && app.game.isAvailableTile(x, y) === true) {
                     availableDirections[code]= directions[code];
                 }
@@ -72,8 +78,8 @@ $(function(){
         },
         move: function(direction){
             var direction = this.getCompass()[direction];
-            this.set('posX', this.get('posX') + direction.left);
-            this.set('posY', this.get('posY') + direction.top);
+            this.set('posX', this.getPosX() + direction.left);
+            this.set('posY', this.getPosY() + direction.top);
         },
         consumeEnergy: function(energy){
             this.set('energy', this.get('energy')-energy);

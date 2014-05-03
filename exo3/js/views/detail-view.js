@@ -16,7 +16,7 @@ $(function(){
             this.$el.html(
                 '<td>' + this.model.get('name') + '</td>'
                 + '<td>' + this.model.getEnergy() + '</td>'
-                + '<td>' + this.model.get('posX') + '-' + this.model.get('posY') + '</td>'
+                + '<td>' + this.model.getPosX() + '-' + this.model.getPosY() + '</td>'
                 + '<td>' + this.model.get('state').toString() + '</td>'
             );
             this.$el.removeClass('warning danger');

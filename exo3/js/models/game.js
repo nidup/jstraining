@@ -84,10 +84,14 @@ $(function(){
             }
             var isAvailable = true;
             app.creatures.each(function(creature){
-                if (creature.get('posX') === x && creature.get('posY') === y) {
+                if (creature.getPosX() === x && creature.getPosY() === y) {
                     isAvailable = false;
                 }
             });
+            if (x >= app.base.getPosX() && x <= app.base.getMaxPosX()
+                && y >= app.base.getPosY() && y <= app.base.getMaxPosY()) {
+                isAvailable = false;
+            }
 
             return isAvailable;
         }

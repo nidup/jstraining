@@ -4,11 +4,10 @@ var app = app || {};
 $(function(){
 	'use strict';
 
-    var tileSize = 20;
-
     // This view turns a Creature model into HTML
     app.CreatureView = Backbone.View.extend({
         tagName: 'div',
+        className: 'creature',
 
         events:{
             'click': 'toggleCreature'
@@ -20,16 +19,14 @@ $(function(){
 
         render: function(){
             this.$el.html(
-                '<div class="creature">'
-                + '<span>' + this.model.get('name') + '</span>'
+                '<span>' + this.model.get('name') + '</span>'
                 + '<span>' + this.model.getEnergy() + '</span>'
-                + '</div>'
             );
-            var posX = this.model.get('posX') * tileSize;
-            var posY = this.model.get('posY') * tileSize;
+            var posX = this.model.get('posX') * app.tileSize;
+            var posY = this.model.get('posY') * app.tileSize;
             this.$el.offset({left: posX, top: posY});
-            this.$el.css('width', tileSize);
-            this.$el.css('height', tileSize);
+            this.$el.css('width', app.tileSize);
+            this.$el.css('height', app.tileSize);
 
             return this;
         },
