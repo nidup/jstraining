@@ -20,9 +20,9 @@ $(function(){
                 + '<td>' + this.model.get('state').toString() + '</td>'
             );
             this.$el.removeClass('warning danger');
-            if (this.model.isDead()) {
+            if (this.model.isOutOfEnergy()) {
                 this.$el.addClass( 'danger');
-            } else if(this.model.isHurted()) {
+            } else if(this.model.needRecharge()) {
                 this.$el.addClass( 'warning');
             }
 

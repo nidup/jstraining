@@ -6,8 +6,6 @@ div#map {
     float: left;
     width: 720px;
     height: 360px;
-    border: 1px solid grey;
-    background-color: #DDD;
 }
 div#sidebar {
     float: left;
@@ -46,3 +44,7 @@ div.tile.snow {
 div.tile.rock {
     background-image: url(../img/rock.png);
 }
+div.tile.highlight {
+    opacity:0.5;
+}
+

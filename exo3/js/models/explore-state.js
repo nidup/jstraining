@@ -4,7 +4,7 @@ var app = app || {};
 $(function(){
 	'use strict';
 
-    // Ready state model
+    // Explore state model
     app.ExploreState = Backbone.Model.extend({
         defaults:{
             direction: null
@@ -26,11 +26,17 @@ $(function(){
             this.set('direction', direction);
         },
         execute: function(creature){
-            if (this.hasDirection() === false || creature.canMove(this.getDirection()) === false) {
-                this.changeDirection(creature.chooseDirection());
+            if (this.hasDirection() === false) {
+                this.changeDirection(creature.chooseRandomDirection());
+            }
+            if (creature.canMove(this.getDirection()) === false) {
+                this.changeDirection(creature.chooseRandomDirection());
             }
             creature.move(this.getDirection());
-            creature.consumeEnergy(2);
+
+            if (creature.needRecharge()) {
+               creature.changeState(new app.GotoBaseState());
+            }
         }
     })
 });

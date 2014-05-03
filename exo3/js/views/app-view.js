@@ -43,6 +43,7 @@ $(function(){
                  _.each(row, function(cell) {
                      var tileDiv = $(document.createElement("div"));
                      tileDiv.addClass('tile');
+                     tileDiv.attr('id', 'x'+x+'y'+y);
                      if (cell === '#') {
                          tileDiv.addClass('trees');
                      } else if (cell === 'o') {

@@ -11,6 +11,7 @@ $(function(){
             tileSize: 20,
             maxTileX: 0,
             maxTileY: 0,
+            graph: null,
             treeChar: '#',
             rockChar: 'o',
             snowChar: ' ',
@@ -18,7 +19,8 @@ $(function(){
             intervalId: null
         },
         initialize: function(){
-            this.set('tiles', [
+            // for rendering
+            var tiles = [
                 "####################################",
                 "#      #    #      ##             ##",
                 "#                       ##         #",
@@ -27,20 +29,20 @@ $(function(){
                 "###           ##     #             #",
                 "#           ###      #             #",
                 "#   ###                            #",
-                "#    ###                     o     #",
+                "#    ###                    #o     #",
                 "#   ####       ##           oo     #",
                 "#   ###         ####               #",
-                "#                ###               #",
-                "#   ####          ###              #",
-                "#   ####                           #",
-                "#   ##                             #",
+                "#                ###         ##    #",
+                "#   ####          ###       ####   #",
+                "#   ####                  ##oo#    #",
+                "#   ##                  oooooo     #",
                 "#                     ooo          #",
                 "#                    ooooo         #",
                 "#                     ooo          #",
-                "#                                  #",
-                "#                                  #",
-                "#          ######                  #",
-                "#           ####           oo      #",
+                "#                      o#          #",
+                "#                      ##          #",
+                "#          ######      ##          #",
+                "#           ####       o#ooo       #",
                 "#            ##             o      #",
                 "#o                 ##              #",
                 "#                 ####             #",
@@ -49,9 +51,25 @@ $(function(){
                 "#                      #           #",
                 "#    #             #           ### #",
                 "#    #            ##               #",
-                "####################################"]);
-            this.set('maxTileX', this.get('tiles')[0].length);
-            this.set('maxTileY', this.get('tiles').length);
+                "####################################"];
+            this.set('tiles', tiles);
+            var maxTileX = tiles[0].length;
+            var maxTileY = tiles.length;
+            this.set('maxTileX', maxTileX);
+            this.set('maxTileY', maxTileY);
+            // for path finding
+            var initGraph = [];
+            for (var indX = 0; indX < maxTileX; indX++) {
+                initGraph[indX]= [];
+                for (var indY = 0; indY < maxTileY; indY++) {
+                    if (tiles[indY].charAt(indX) === ' ') {
+                        initGraph[indX][indY]= 1;
+                    } else {
+                        initGraph[indX][indY]= 0;
+                    }
+                }
+            }
+            this.set('graph', new Graph(initGraph));
         },
         start: function(){
             this.set('intervalId', setInterval(this.run, 1000 / this.get('fps')));
@@ -64,7 +82,7 @@ $(function(){
         run: function(){
             var hasOneAlive = false;
             app.creatures.each(function(creature){
-                if (!creature.isDead()) {
+                if (!creature.isOutOfEnergy()) {
                     hasOneAlive = true;
                     creature.act();
                 }
@@ -94,6 +112,20 @@ $(function(){
             }
 
             return isAvailable;
+        },
+        getShortestPath: function(startX, startY, endX, endY) {
+            var start = this.get('graph').nodes[startX][startY];
+            var end = this.get('graph').nodes[endX][endY];
+            var nodes = astar.search(this.get('graph').nodes, start, end, false);
+            var debug = false;
+            if (debug === true) {
+                for (var ind = 0; ind < nodes.length; ind++) {
+                    var id = '#x'+nodes[ind].x+'y'+nodes[ind].y;
+                    $(id).addClass('highlight');
+                }
+            }
+
+            return nodes;
         }
     });
 });

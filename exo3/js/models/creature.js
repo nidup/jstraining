@@ -18,9 +18,6 @@ $(function(){
         initialize: function() {
             this.set('state', new app.ExploreState());
         },
-        getEnergy: function(){
-            return this.get('energy');
-        },
         getPosX: function(){
             return this.get('posX');
         },
@@ -30,11 +27,36 @@ $(function(){
         toggle: function(){
             this.set('checked', !this.get('checked'));
         },
-        isHurted: function(){
-            return this.get('energy') < this.get('maxEnergy') / 4;
+        getEnergy: function(){
+            return this.get('energy');
         },
-        isDead: function(){
-            return this.get('energy') <= 0;
+        getMaxEnergy: function(){
+            return this.get('maxEnergy');
+        },
+        recharge: function(){
+            var energy = this.getEnergy() + 20;
+            energy = (energy > this.getMaxEnergy()) ? this.getMaxEnergy() : energy;
+            this.set('energy', energy);
+        },
+        isRecharged: function(){
+            return this.getEnergy() >= this.getMaxEnergy();
+        },
+        needRecharge: function(){
+            return this.getEnergy() < this.getMaxEnergy() / 4;
+        },
+        isOutOfEnergy: function(){
+            return this.getEnergy() <= 0;
+        },
+        isNearBase: function(){
+            var minX = app.base.getPosX()-1;
+            var maxX = app.base.getMaxPosX()+1;
+            var minY = app.base.getPosY()-1;
+            var maxY = app.base.getMaxPosY()+1;
+            return this.getPosX() >= minX && this.getPosX() <= maxX
+                && this.getPosY() >= minY && this.getPosY() <= maxY;
+        },
+        changeState: function(state){
+            this.set('state', state);
         },
         executeState: function(){
             this.get('state').execute(this);
@@ -63,7 +85,7 @@ $(function(){
             }
             return availableDirections;
         },
-        chooseDirection: function(){
+        chooseRandomDirection: function(){
             var directions = this.getAvailableDirections();
             var nb = Object.keys(directions).length;
             if (nb > 0) {
@@ -78,8 +100,17 @@ $(function(){
         },
         move: function(direction){
             var direction = this.getCompass()[direction];
-            this.set('posX', this.getPosX() + direction.left);
-            this.set('posY', this.getPosY() + direction.top);
+            var destX = this.getPosX() + direction.left;
+            var destY = this.getPosY() + direction.top;
+            this.moveToCoords(destX, destY);
+        },
+        canMoveToCoords: function(x, y){
+            return app.game.isAvailableTile(x, y);
+        },
+        moveToCoords: function(x, y){
+            this.set('posX', x);
+            this.set('posY', y);
+            this.consumeEnergy(2);
         },
         consumeEnergy: function(energy){
             this.set('energy', this.get('energy')-energy);
