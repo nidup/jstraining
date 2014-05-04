@@ -23,6 +23,9 @@ $(function(){
         selectMine: function(mine){
             this.set('mine', mine);
         },
+        getMine: function(){
+            return this.get('mine');
+        },
         hasPath: function(){
             return this.get('path') !== null;
         },
@@ -30,17 +33,17 @@ $(function(){
             return this.get('path');
         },
         selectPath: function(creature, mine){
+            var mineX = mine.getSlotX();
+            var mineY = mine.getSlotY();
             var path = app.game.getShortestPath(
                 creature.getPosX(), creature.getPosY(),
-                mine.getPosX(), mine.getPosY()
+                mineX, mineY
             );
+            console.log(creature.get('name')+' -> mine('+mineX+':'+mineY+')');
             this.set('path', path);
         },
         getNextPosition: function(){
-            return this.getPath()[0];
-        },
-        removePosition: function(){
-            this.getPath().shift();
+            return this.getPath().shift();
         },
         execute: function(creature){
             if (this.hasMine() === false) {
@@ -50,14 +53,21 @@ $(function(){
             if (this.hasPath() === false) {
                 this.selectPath(creature, mine);
             }
-            if (creature.isNearMine()) {
-                creature.changeState(new app.CollectState());
+
+            var position = this.getNextPosition();
+            if (position != null && creature.canMoveToCoords(position.x, position.y)) {
+                creature.moveToCoords(position.x, position.y);
             } else {
+                this.selectPath(creature, this.getMine());
                 var position = this.getNextPosition();
                 if (position != null && creature.canMoveToCoords(position.x, position.y)) {
-                    creature.moveToCoords(position.x, position.y);
-                    this.removePosition();
+                  creature.moveToCoords(position.x, position.y);
+                } else {
+                    this.selectPath(creature, this.getMine());
                 }
+            }
+            if (creature.isNearMine()) {
+                creature.changeState(new app.CollectState());
             }
         }
     })

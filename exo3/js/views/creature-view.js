@@ -19,8 +19,8 @@ $(function(){
 
         render: function(){
             this.$el.html(
-                '<span>' + this.model.get('name') + '</span>'
-                + '<span>' + this.model.getEnergy() + '</span>'
+                '<span>' + this.model.getEnergy() + '</span>'
+                +'<span>' + this.model.get('name') + '</span>'
             );
             var posX = this.model.get('posX') * app.tileSize;
             var posY = this.model.get('posY') * app.tileSize;

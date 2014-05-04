@@ -36,7 +36,7 @@ $(function(){
             if (this.hasMine() === false) {
                creature.changeState(new app.ExploreState());
             }
-            if (creature.isFullLoaded()) {
+            if (creature.isFullLoaded() || creature.needRecharge()) {
                 creature.changeState(new app.GotoBaseState());
             } else {
                 creature.collectFrom(this.getMine());

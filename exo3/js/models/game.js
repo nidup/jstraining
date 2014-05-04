@@ -11,7 +11,7 @@ $(function(){
             tileSize: 20,
             maxTileX: 0,
             maxTileY: 0,
-            graph: null,
+            mapGraph: null,
             treeChar: '#',
             rockChar: 'o',
             snowChar: ' ',
@@ -19,7 +19,10 @@ $(function(){
             intervalId: null
         },
         initialize: function(){
-            // for rendering
+            this.initializeRendering();
+            this.initializePathFinding();
+        },
+        initializeRendering: function(){
             var tiles = [
                 "###############################################",
                 "#      #    #      ##                        ##",
@@ -57,8 +60,13 @@ $(function(){
             var maxTileY = tiles.length;
             this.set('maxTileX', maxTileX);
             this.set('maxTileY', maxTileY);
-            // for path finding
+        },
+        initializePathFinding: function(){
+            var maxTileX = this.get('maxTileX');
+            var maxTileY = this.get('maxTileY');
+            var tiles = this.get('tiles');
             var initGraph = [];
+            // setup with ground properties
             for (var indX = 0; indX < maxTileX; indX++) {
                 initGraph[indX]= [];
                 for (var indY = 0; indY < maxTileY; indY++) {
@@ -69,7 +77,23 @@ $(function(){
                     }
                 }
             }
-            this.set('graph', new Graph(initGraph));
+            // TODO: cause some blocking situations
+            // add big weight for mines tiles
+            app.mines.each(function(mine){
+                for (var indX=mine.getPosX(); indX < mine.getMaxPosX(); indX++) {
+                    for (var indY=mine.getPosY(); indY < mine.getMaxPosY(); indY++) {
+                        initGraph[indX][indY] = 100;
+                    }
+                }
+            });
+            // add big weight for base tiles
+            for (var indX=app.base.getPosX(); indX < app.base.getMaxPosX(); indX++) {
+                for (var indY=app.base.getPosY(); indY < app.base.getMaxPosY(); indY++) {
+                    initGraph[indX][indY] = 100;
+                }
+            }
+
+            this.set('mapGraph', initGraph);
         },
         start: function(){
             this.set('intervalId', setInterval(this.run, 1000 / this.get('fps')));
@@ -96,7 +120,7 @@ $(function(){
         },
         isAvailableTile: function(x, y){
 
-            // TODO : update graph  with mines and bases, then use it to know traversable nodes
+            // TODO : update graph  with mines, bases and other creatures, then use it to know traversable nodes
             var tiles = this.get('tiles');
             var tile = tiles[y][x];
             if (tile === this.get('treeChar') || tile === this.get('rockChar')) {
@@ -121,12 +145,32 @@ $(function(){
 
             return isAvailable;
         },
+        getMapGraph: function(){
+            return new Graph(this.get('mapGraph'));
+        },
+        getCurrentGraph: function(){
+            var mapGraph = this.get('mapGraph');
+            // add temporary weight on this tile
+            app.creatures.each(function(creature){
+                var weight = 5;
+                if (creature.isOutOfEnergy()) {
+                    weight = 0;
+                }
+                mapGraph[creature.getPosX()][creature.getPosY()]= weight;
+            });
+
+            return new Graph(mapGraph);
+        },
         getShortestPath: function(startX, startY, endX, endY) {
-            var start = this.get('graph').nodes[startX][startY];
-            var end = this.get('graph').nodes[endX][endY];
-            var nodes = astar.search(this.get('graph').nodes, start, end, false);
-            var debug = false;
+            var graph = this.getCurrentGraph();
+            var start = graph.nodes[startX][startY];
+            var end = graph.nodes[endX][endY];
+            var nodes = astar.search(graph.nodes, start, end, true);
+            var debug = true;
             if (debug === true) {
+                $('.highlight').each(function(){
+                    $(this).removeClass('highlight');
+                });
                 for (var ind = 0; ind < nodes.length; ind++) {
                     var id = '#x'+nodes[ind].x+'y'+nodes[ind].y;
                     $(id).addClass('highlight');

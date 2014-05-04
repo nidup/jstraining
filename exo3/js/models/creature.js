@@ -87,6 +87,9 @@ $(function(){
 
             return nearMine;
         },
+        getState: function(){
+            return this.get('state');
+        },
         changeState: function(state){
             this.set('state', state);
         },

@@ -22,31 +22,37 @@ $(function(){
         getPath: function(){
             return this.get('path');
         },
-        choosePath: function(creature, base){
+        selectPath: function(creature, base){
+            var baseX = base.getSlotX();
+            var baseY = base.getSlotY();
             var path = app.game.getShortestPath(
                 creature.getPosX(), creature.getPosY(),
-                base.getPosX(), base.getPosY()
+                baseX, baseY
             );
+            console.log(creature.get('name')+' -> base('+baseX+':'+baseY+')');
             this.set('path', path);
         },
         getNextPosition: function(){
-            return this.getPath()[0];
-        },
-        removePosition: function(){
-            this.getPath().shift();
+            return this.getPath().shift();
         },
         execute: function(creature){
             if (this.hasPath() === false) {
-                this.choosePath(creature, app.base);
+                this.selectPath(creature, app.base);
             }
-            if (creature.isNearBase()) {
-                creature.changeState(new app.AtBaseState());
+            var position = this.getNextPosition();
+            if (position != null && creature.canMoveToCoords(position.x, position.y)) {
+                creature.moveToCoords(position.x, position.y);
             } else {
+                this.selectPath(creature, app.base);
                 var position = this.getNextPosition();
                 if (position != null && creature.canMoveToCoords(position.x, position.y)) {
                     creature.moveToCoords(position.x, position.y);
-                    this.removePosition();
+                } else {
+                    this.selectPath(creature, app.base);
                 }
+            }
+            if (creature.isNearBase()) {
+                creature.changeState(new app.AtBaseState());
             }
         }
     })

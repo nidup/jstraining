@@ -31,6 +31,12 @@ $(function(){
         getHeigth: function(){
             return this.get('heigth');
         },
+        getSlotX: function(){
+            return this.getPosX() + Math.floor((Math.random() * this.getWidth()));
+        },
+        getSlotY: function(){
+            return this.getPosY() + Math.floor((Math.random() * this.getHeigth()));
+        },
         getMinerals: function(){
             return this.get('minerals');
         },
