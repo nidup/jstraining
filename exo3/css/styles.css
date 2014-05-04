@@ -13,6 +13,9 @@ div#sidebar {
     float: right;
     margin-right: 50px;
 }
+table.table{
+    width: 550px;
+}
 div.base {
     display: block;
     width: 60px;

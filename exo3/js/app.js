@@ -21,7 +21,6 @@ $(function(){
 
     app.mines = new app.Mines([
         new app.Mine({posX: 40, posY: 5}),
-        new app.Mine({posX: 13, posY: 14}),
         new app.Mine({posX: 15, posY: 25})
     ]);
 

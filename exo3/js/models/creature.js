@@ -13,10 +13,12 @@ $(function(){
             posX: 1,
             posY: 1,
             checked: false,
-            state: null
+            state: null,
+            loading: 0,
+            maxLoading: 100
         },
         initialize: function() {
-            this.set('state', new app.ExploreState());
+            this.set('state', new app.AtBaseState());
         },
         getPosX: function(){
             return this.get('posX');
@@ -47,6 +49,21 @@ $(function(){
         isOutOfEnergy: function(){
             return this.getEnergy() <= 0;
         },
+        getLoading: function(){
+            return this.get('loading');
+        },
+        getMaxLoading: function(){
+            return this.get('maxLoading');
+        },
+        getLoadingCapacity: function(){
+            return this.getMaxLoading() - this.getLoading();
+        },
+        isFullLoaded: function(){
+            return this.getLoading() >= this.getMaxLoading();
+        },
+        isEmpty: function(){
+            return this.getLoading() == 0;
+        },
         isNearBase: function(){
             var minX = app.base.getPosX()-1;
             var maxX = app.base.getMaxPosX()+1;
@@ -54,6 +71,21 @@ $(function(){
             var maxY = app.base.getMaxPosY()+1;
             return this.getPosX() >= minX && this.getPosX() <= maxX
                 && this.getPosY() >= minY && this.getPosY() <= maxY;
+        },
+        isNearMine: function(){
+            var nearMine = null;
+            app.mines.each(function(mine){
+                var minX = mine.getPosX()-1;
+                var maxX = mine.getMaxPosX()+1;
+                var minY = mine.getPosY()-1;
+                var maxY = mine.getMaxPosY()+1;
+                if (this.getPosX() >= minX && this.getPosX() <= maxX
+                    && this.getPosY() >= minY && this.getPosY() <= maxY) {
+                    nearMine = mine;
+                }
+            }, this);
+
+            return nearMine;
         },
         changeState: function(state){
             this.set('state', state);
@@ -114,6 +146,30 @@ $(function(){
         },
         consumeEnergy: function(energy){
             this.set('energy', this.get('energy')-energy);
+        },
+        collectFrom: function(mine) {
+            // TODO : check near mine
+            var qty = 10;
+            var capacity = this.getLoadingCapacity();
+            if (capacity < qty) {
+                qty = capacity;
+            }
+            if (qty > mine.getQuantity()) {
+                qty = mine.getQuantity();
+            }
+            mine.retrieve(qty);
+            this.set('loading', this.getLoading() + qty);
+            this.consumeEnergy(2);
+        },
+        unload: function(){
+            // TODO: chech near base
+            var qty = 10;
+            if (qty > this.getLoading()) {
+                qty = this.getLoading();
+            }
+            this.set('loading', this.getLoading() - qty);
+            app.base.addMinerals(qty);
+
         },
         act: function(){
             this.executeState();

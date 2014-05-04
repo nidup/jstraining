@@ -10,7 +10,8 @@ $(function(){
             posX: 1,
             posY: 1,
             width:3,
-            heigth:3
+            heigth:3,
+            minerals: 0
         },
         getPosX: function(){
             return this.get('posX');
@@ -29,6 +30,12 @@ $(function(){
         },
         getHeigth: function(){
             return this.get('heigth');
+        },
+        getMinerals: function(){
+            return this.get('minerals');
+        },
+        addMinerals: function(qty){
+            this.set('minerals', this.getMinerals() + qty);
         }
     });
 });

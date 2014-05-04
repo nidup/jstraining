@@ -14,18 +14,26 @@ $(function(){
 
             this.total = $('#total span');
             this.map = $('#map');
-            this.details = $('#details tbody');
+            this.infoCreatures = $('#info-creatures tbody');
+            this.infoMines = $('#info-mines tbody');
+            this.infoBases = $('#info-bases tbody');
 
             this.initializeMap(this.map);
             this.listenTo(app.creatures, 'change', this.render);
 
             var view = new app.BaseView({ model: app.base });
             this.map.append(view.render().el);
+            var infoView = new app.BaseInfoView({ model: app.base });
+            this.infoBases.append(infoView.render().el);
 
             app.mines.each(function(mine){
+                // map view
                 var view = new app.MineView({ model: mine });
                 this.map.append(view.render().el);
                 view.render(); // TODO : to fix original rendering
+                // info view
+                var infoView = new app.MineInfoView({ model: mine });
+                this.infoMines.append(infoView.render().el);
             }, this);
 
             app.creatures.each(function(creature){
@@ -34,8 +42,8 @@ $(function(){
                 this.map.append(view.render().el);
                 view.render(); // TODO : to fix original rendering
                 // detail view
-                var detailView = new app.DetailView({ model: creature });
-                this.details.append(detailView.render().el);
+                var detailView = new app.CreatureInfoView({ model: creature });
+                this.infoCreatures.append(detailView.render().el);
 
             }, this);
         },

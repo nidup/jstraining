@@ -10,7 +10,8 @@ $(function(){
             posX: 1,
             posY: 1,
             width:2,
-            heigth:3
+            heigth:3,
+            quantity: 5000
         },
         getPosX: function(){
             return this.get('posX');
@@ -29,6 +30,13 @@ $(function(){
         },
         getHeigth: function(){
             return this.get('heigth');
+        },
+        getQuantity: function(){
+            return this.get('quantity');
+        },
+        retrieve: function(qty){
+            var remaining = this.getQuantity() - qty;
+            this.set('quantity', remaining);
         }
     });
 });

@@ -8,17 +8,27 @@ $(function(){
     app.CommonKnowledge = Backbone.Model.extend({
         defaults:{
             base: null,
-            mines: []
+            mines: null
+        },
+        initialize: function(){
+            this.set('mines', new app.Mines());
+        },
+        getMines: function(){
+            return this.get('mines');
         },
         addMine: function(mine) {
-            this.get('mines').push(mine);
+            this.getMines().add(mine);
             return this;
         },
-        knowAMine: function() {
-            return this.get('mines').length > 0;
+        containsMines: function() {
+            return this.getMines().length > 0;
         },
-        getClosestMine: function(x, y){
-            
+        getClosestMineFrom: function(x, y){
+            // TODO for now return the first one
+            if (this.containsMines()) {
+                return this.getMines().at(0);
+            }
+            return null;
         }
     })
 });

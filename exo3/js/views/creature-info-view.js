@@ -5,7 +5,7 @@ $(function(){
 	'use strict';
 
     // This view turns a Creature model into HTML
-    app.DetailView = Backbone.View.extend({
+    app.CreatureInfoView = Backbone.View.extend({
         tagName: 'tr',
 
         initialize: function(){
@@ -16,6 +16,7 @@ $(function(){
             this.$el.html(
                 '<td>' + this.model.get('name') + '</td>'
                 + '<td>' + this.model.getEnergy() + '</td>'
+                + '<td>' + this.model.getLoading() + '</td>'
                 + '<td>' + this.model.getPosX() + '-' + this.model.getPosY() + '</td>'
                 + '<td>' + this.model.get('state').toString() + '</td>'
             );
