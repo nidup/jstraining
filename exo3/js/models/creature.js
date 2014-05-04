@@ -110,7 +110,7 @@ $(function(){
         moveToCoords: function(x, y){
             this.set('posX', x);
             this.set('posY', y);
-            this.consumeEnergy(2);
+            this.consumeEnergy(1);
         },
         consumeEnergy: function(energy){
             this.set('energy', this.get('energy')-energy);

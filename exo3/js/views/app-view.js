@@ -22,13 +22,18 @@ $(function(){
             var view = new app.BaseView({ model: app.base });
             this.map.append(view.render().el);
 
+            app.mines.each(function(mine){
+                var view = new app.MineView({ model: mine });
+                this.map.append(view.render().el);
+                view.render(); // TODO : to fix original rendering
+            }, this);
+
             app.creatures.each(function(creature){
-                // add map view
+                // map view
                 var view = new app.CreatureView({ model: creature });
                 this.map.append(view.render().el);
-                // TODO : to fix original position
-                view.render();
-                // add detail view
+                view.render(); // TODO : to fix original rendering
+                // detail view
                 var detailView = new app.DetailView({ model: creature });
                 this.details.append(detailView.render().el);
 

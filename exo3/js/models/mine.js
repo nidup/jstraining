@@ -4,12 +4,12 @@ var app = app || {};
 $(function(){
 	'use strict';
 
-    // Base model
-    app.Base = Backbone.Model.extend({
+    // Mine model
+    app.Mine = Backbone.Model.extend({
         defaults:{
             posX: 1,
             posY: 1,
-            width:3,
+            width:2,
             heigth:3
         },
         getPosX: function(){

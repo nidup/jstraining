@@ -21,37 +21,37 @@ $(function(){
         initialize: function(){
             // for rendering
             var tiles = [
-                "####################################",
-                "#      #    #      ##             ##",
-                "#                       ##         #",
-                "#          #####        ###        #",
-                "##    o    #   #    ##             #",
-                "###           ##     #             #",
-                "#           ###      #             #",
-                "#   ###                            #",
-                "#    ###                    #o     #",
-                "#   ####       ##           oo     #",
-                "#   ###         ####               #",
-                "#                ###         ##    #",
-                "#   ####          ###       ####   #",
-                "#   ####                  ##oo#    #",
-                "#   ##                  oooooo     #",
-                "#                     ooo          #",
-                "#                    ooooo         #",
-                "#                     ooo          #",
-                "#                      o#          #",
-                "#                      ##          #",
-                "#          ######      ##          #",
-                "#           ####       o#ooo       #",
-                "#            ##             o      #",
-                "#o                 ##              #",
-                "#                 ####             #",
-                "#                  ####            #",
-                "#                     ##           #",
-                "#                      #           #",
-                "#    #             #           ### #",
-                "#    #            ##               #",
-                "####################################"];
+                "###############################################",
+                "#      #    #      ##                        ##",
+                "#                       ##                    #",
+                "#          #####        ###                   #",
+                "##    o    #   #    ##                        #",
+                "###           ##     #                        #",
+                "#           ###      #                        #",
+                "#   ###                                       #",
+                "#    ###                    #o                #",
+                "#   ####       ##           oo                #",
+                "#   ###         ####                          #",
+                "#                ###         ##               #",
+                "#   ####          ###       ####              #",
+                "#   ####                  ##oo#               #",
+                "#   ##                  oooooo                #",
+                "#                     ooo                     #",
+                "#                    ooooo                    #",
+                "#                     ooo                     #",
+                "#                      o#                     #",
+                "#                      ##                     #",
+                "#          ######      ##                     #",
+                "#           ####       o#oooo                 #",
+                "#            ##           ooo o               #",
+                "#o                 ##      o                  #",
+                "#                 ####                        #",
+                "#                  ####                       #",
+                "#                     ##                      #",
+                "#                      #                      #",
+                "#    #             #                      ### #",
+                "#    #            ##                          #",
+                "###############################################"];
             this.set('tiles', tiles);
             var maxTileX = tiles[0].length;
             var maxTileY = tiles.length;
@@ -95,6 +95,8 @@ $(function(){
             return this;
         },
         isAvailableTile: function(x, y){
+
+            // TODO : update graph  with mines and bases, then use it to know traversable nodes
             var tiles = this.get('tiles');
             var tile = tiles[y][x];
             if (tile === this.get('treeChar') || tile === this.get('rockChar')) {
@@ -110,6 +112,12 @@ $(function(){
                 && y >= app.base.getPosY() && y <= app.base.getMaxPosY()) {
                 isAvailable = false;
             }
+            app.mines.each(function(mine){
+                if (x >= mine.getPosX() && x <= mine.getMaxPosX()
+                    && y >= mine.getPosY() && y <= mine.getMaxPosY()) {
+                    isAvailable = false;
+                }
+            });
 
             return isAvailable;
         },
