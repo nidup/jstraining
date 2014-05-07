@@ -11,15 +11,19 @@ $(function(){
         el: $('#map'),
 
         initialize: function(){
-
             this.total = $('#total span');
+
             this.map = $('#map');
+            this.infoGame = $('#info-game tbody');
             this.infoCreatures = $('#info-creatures tbody');
             this.infoMines = $('#info-mines tbody');
             this.infoBases = $('#info-bases tbody');
 
             this.initializeMap(this.map);
             this.listenTo(app.creatures, 'change', this.render);
+
+            var infoView = new app.GameInfoView({ model: app.game });
+            this.infoGame.append(infoView.render().el);
 
             var view = new app.BaseView({ model: app.base });
             this.map.append(view.render().el);

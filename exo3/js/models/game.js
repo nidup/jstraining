@@ -16,7 +16,8 @@ $(function(){
             rockChar: 'o',
             snowChar: ' ',
             fps: 3,
-            intervalId: null
+            intervalId: null,
+            round: 0
         },
         initialize: function(){
             this.initializeRendering();
@@ -92,6 +93,12 @@ $(function(){
 
             this.set('mapGraph', initGraph);
         },
+        getRound: function(){
+            return this.get('round');
+        },
+        incrementRound: function(){
+            this.set('round', this.get('round') +1);
+        },
         start: function(){
             this.set('intervalId', setInterval(this.run, 1000 / this.get('fps')));
             return this;
@@ -101,6 +108,8 @@ $(function(){
             return this;
         },
         run: function(){
+            app.game.incrementRound();
+
             var hasOneAlive = false;
             app.creatures.each(function(creature){
                 if (!creature.isOutOfEnergy()) {
@@ -110,7 +119,15 @@ $(function(){
             });
 
             if (!hasOneAlive) {
-                this.stop();
+                app.game.stop();
+            }
+
+            var availableMineral = 0;
+            app.mines.each(function(mine){
+                availableMineral += mine.getQuantity();
+            });
+            if (availableMineral === 0) {
+                app.game.stop();
             }
 
             return this;

@@ -26,6 +26,7 @@
         <script type="text/javascript" src="js/views/base-info-view.js"></script>
         <script type="text/javascript" src="js/views/mine-view.js"></script>
         <script type="text/javascript" src="js/views/mine-info-view.js"></script>
+        <script type="text/javascript" src="js/views/game-info-view.js"></script>
         <script type="text/javascript" src="js/views/app-view.js"></script>
         <script type="text/javascript" src="js/app.js"></script>
     </head>
@@ -38,6 +39,14 @@
             <button type="button" id="next-turn" class="btn btn-primary">Next Turn</button>
             <button type="button" id="add-creature" class="btn btn-default">Default</button>
 
+            <table id="info-game" class="table table-striped">
+                <thead>
+                    <th>Round</th>
+                </thead>
+                <tbody>
+                    <!-- game details are added here-->
+                </tbody>
+            </table>
             <table id="info-creatures" class="table table-striped">
                 <thead>
                     <th>Name</th>
