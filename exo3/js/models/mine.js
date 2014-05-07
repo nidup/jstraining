@@ -12,7 +12,7 @@ $(function(){
             width:2,
             heigth:3,
             slots: [],
-            quantity: 5000
+            minerals: 5000
         },
         initialize: function()
         {
@@ -55,12 +55,15 @@ $(function(){
         getRandomSlot: function(){
             return this.getSlots()[Math.floor((Math.random() * this.getSlots().length))];
         },
-        getQuantity: function(){
-            return this.get('quantity');
+        getMinerals: function(){
+            return this.get('minerals');
         },
         retrieve: function(qty){
-            var remaining = this.getQuantity() - qty;
-            this.set('quantity', remaining);
+            var remaining = this.getMinerals() - qty;
+            this.set('minerals', remaining);
+        },
+        isEmpty: function(){
+            return this.getMinerals() === 0;
         }
     });
 });

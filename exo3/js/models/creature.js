@@ -157,8 +157,8 @@ $(function(){
             if (capacity < qty) {
                 qty = capacity;
             }
-            if (qty > mine.getQuantity()) {
-                qty = mine.getQuantity();
+            if (qty > mine.getMinerals()) {
+                qty = mine.getMinerals();
             }
             mine.retrieve(qty);
             this.set('loading', this.getLoading() + qty);

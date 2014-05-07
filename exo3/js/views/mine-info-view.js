@@ -14,7 +14,7 @@ $(function(){
 
         render: function(){
             this.$el.html(
-                '<td>' + this.model.getQuantity() + '</td>'
+                '<td>' + this.model.getMinerals() + '</td>'
                 + '<td>' + this.model.getPosX() + '-' + this.model.getPosY() + '</td>'
             );
             return this;

@@ -124,7 +124,7 @@ $(function(){
 
             var availableMineral = 0;
             app.mines.each(function(mine){
-                availableMineral += mine.getQuantity();
+                availableMineral += mine.getMinerals();
             });
             if (availableMineral === 0) {
                 app.game.stop();
