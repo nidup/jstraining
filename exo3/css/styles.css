@@ -38,7 +38,31 @@ div.creature {
     height: 20px;
     font-size: 10px;
     position: absolute;
-    background-image: url(../img/creature.png);
+    background:url(../img/miner.png) no-repeat;
+}
+div.creature.direction-n {
+    background-position: left top;
+}
+div.creature.direction-nw {
+    background-position: -41px top;
+}
+div.creature.direction-w {
+    background-position: -80px top;
+}
+div.creature.direction-sw {
+    background-position: -120px top;
+}
+div.creature.direction-s {
+    background-position: -161px top;
+}
+div.creature.direction-se {
+    background-position: -201px top;
+}
+div.creature.direction-e {
+    background-position: -241px top;
+}
+div.creature.direction-ne {
+    background-position: -281px top;
 }
 div.creature span {
     display: block;

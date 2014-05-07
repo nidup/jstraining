@@ -18,6 +18,9 @@ $(function(){
         },
 
         render: function(){
+            this.$el.removeClass('direction-n direction-ne direction-e direction-se direction-s direction-sw direction-w direction-nw')
+            this.$el.addClass('direction-' + this.model.getDirection().toLowerCase());
+
             this.$el.html(
                 '<span>' + this.model.getEnergy() + '</span>'
                 +'<span>' + this.model.get('name') + '</span>'
