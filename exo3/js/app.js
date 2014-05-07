@@ -15,7 +15,6 @@ $(function(){
     app.base = new app.Base({posX: 10, posY:10});
 
     app.commonKnowledge = new app.CommonKnowledge();
-    app.commonKnowledge.addMine(app.mines.at(2));
 
     app.creatures = new app.Creatures([
         new app.Creature({ name: 'Foo', posX: 9, posY: 9}),

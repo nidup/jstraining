@@ -12,7 +12,8 @@ $(function(){
             maxEnergy: 100,
             posX: 1,
             posY: 1,
-            checked: false,
+            direction: 'NW',
+            checked: false, // TODO: to delete
             state: null,
             loading: 0,
             maxLoading: 100
@@ -20,12 +21,19 @@ $(function(){
         initialize: function() {
             this.set('state', new app.AtBaseState());
         },
+        getName: function(){
+            return this.get('name');
+        },
         getPosX: function(){
             return this.get('posX');
         },
         getPosY: function(){
             return this.get('posY');
         },
+        getDirection: function(){
+            return this.get('direction');
+        },
+        // TODO : remove
         toggle: function(){
             this.set('checked', !this.get('checked'));
         },
@@ -108,6 +116,12 @@ $(function(){
                 'NW': {'top': -1, 'left':-1}
             };
         },
+        getDirectionTo: function(x, y){
+            var direction = '';
+            direction = (y > this.getPosY())? 'S' : (y < this.getPosY()) ? 'N' : '';
+            direction = direction + ((x > this.getPosX())? 'E' : (x < this.getPosX()) ? 'W' : '');
+            return direction;
+        },
         getAvailableDirections: function(){
             var directions = this.getCompass();
             var availableDirections = {};
@@ -143,6 +157,7 @@ $(function(){
             return app.game.isAvailableTile(x, y);
         },
         moveToCoords: function(x, y){
+            this.set('direction', this.getDirectionTo(x, y));
             this.set('posX', x);
             this.set('posY', y);
             this.consumeEnergy(1);

@@ -178,8 +178,10 @@ $(function(){
             var graph = this.getCurrentGraph();
             var start = graph.nodes[startX][startY];
             var end = graph.nodes[endX][endY];
-            var nodes = astar.search(graph.nodes, start, end, true);
-            var debug = true;
+            // TODO : use closest node to replace the use of random slots ?
+            var nodes = astar.search(graph.nodes, start, end, {diagonal: true});
+            // TODO: remove or refactor
+            var debug = false;
             if (debug === true) {
                 $('.highlight').each(function(){
                     $(this).removeClass('highlight');

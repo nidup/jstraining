@@ -35,7 +35,7 @@ $(function(){
             creature.move(this.getDirection());
 
             var mine = creature.isNearMine();
-            if (mine !== null and mine.isEmpty() === false) {
+            if (mine !== null) {
                 app.commonKnowledge.addMine(mine);
                 creature.changeState(new app.CollectState());
             }
