@@ -7,7 +7,7 @@ $(function(){
     // Recharge state model
     app.AtBaseState = Backbone.Model.extend({
         toString: function(){
-            return 'at base (recharge/unload)';
+            return 'at base';
         },
         onEnter: function(){
         },
@@ -22,7 +22,7 @@ $(function(){
             }
 
             if (creature.isRecharged() && creature.isEmpty()) {
-                if (app.commonKnowledge.containsMines()) {
+                if (app.commonKnowledge.containsWorkableMines()) {
                     creature.changeState(new app.GotoMineState());
                 } else {
                     creature.changeState(new app.ExploreState());

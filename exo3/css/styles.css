@@ -14,7 +14,7 @@ div#sidebar {
     margin-right: 50px;
 }
 table.table{
-    width: 550px;
+    width: 700px;
 }
 div.base {
     display: block;
@@ -22,7 +22,28 @@ div.base {
     height: 60px;
     font-size: 10px;
     position: absolute;
-    background-image: url(../img/base.png);
+    background:url(../img/base.png) no-repeat;
+}
+div.base.animation-1 {
+    background-position: left top;
+}
+div.base.animation-2 {
+    background-position: -60px top;
+}
+div.base.animation-3 {
+    background-position: -120px top;
+}
+div.base.animation-4 {
+    background-position: -180px top;
+}
+div.base.animation-5 {
+    background-position: -240px top;
+}
+div.base.animation-6 {
+    background-position: -300px top;
+}
+div.base.animation-7 {
+    background-position: -360px top;
 }
 div.mine {
     display: block;
@@ -30,7 +51,7 @@ div.mine {
     height: 60px;
     font-size: 10px;
     position: absolute;
-    background-image: url(../img/mine.png);
+    background:url(../img/mine.png) no-repeat;
 }
 div.creature {
     display: block;

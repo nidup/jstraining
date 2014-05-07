@@ -12,7 +12,7 @@ $(function(){
             width:2,
             heigth:3,
             slots: [],
-            minerals: 5000
+            minerals: 500
         },
         initialize: function()
         {

@@ -37,12 +37,11 @@ $(function(){
             var mine = creature.isNearMine();
             if (mine !== null) {
                 app.commonKnowledge.addMine(mine);
-                creature.changeState(new app.CollectState());
             }
             if (creature.needRecharge()) {
                creature.changeState(new app.GotoBaseState());
             }
-            if (app.commonKnowledge.containsMines()) {
+            if (app.commonKnowledge.containsWorkableMines()) {
                creature.changeState(new app.GotoMineState());
             }
         }

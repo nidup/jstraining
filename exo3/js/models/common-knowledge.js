@@ -16,6 +16,16 @@ $(function(){
         getMines: function(){
             return this.get('mines');
         },
+        // TODO : avoid to recompute on each call ?
+        getWorkableMines: function(){
+            var workableMines = new app.Mines();
+            this.getMines().each(function(mine){
+                if (mine.isEmpty() === false) {
+                    workableMines.add(mine);
+                }
+            });
+            return workableMines;
+        },
         addMine: function(mine) {
             this.getMines().add(mine);
             return this;
@@ -23,10 +33,13 @@ $(function(){
         containsMines: function() {
             return this.getMines().length > 0;
         },
+        containsWorkableMines: function() {
+            return this.getWorkableMines().length > 0;
+        },
         getClosestMineFrom: function(x, y){
             // TODO for now return the first one
-            if (this.containsMines()) {
-                return this.getMines().at(0);
+            if (this.containsWorkableMines()) {
+                return this.getWorkableMines().at(0);
             }
             return null;
         }

@@ -52,7 +52,7 @@ $(function(){
             return this.getEnergy() >= this.getMaxEnergy();
         },
         needRecharge: function(){
-            return this.getEnergy() < this.getMaxEnergy() / 4;
+            return this.getEnergy() < this.getMaxEnergy() / 3;
         },
         isOutOfEnergy: function(){
             return this.getEnergy() <= 0;
