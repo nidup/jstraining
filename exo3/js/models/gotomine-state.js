@@ -33,13 +33,11 @@ $(function(){
             return this.get('path');
         },
         selectPath: function(creature, mine){
-            var mineX = mine.getSlotX();
-            var mineY = mine.getSlotY();
+            var slot = mine.getRandomSlot();
             var path = app.game.getShortestPath(
                 creature.getPosX(), creature.getPosY(),
-                mineX, mineY
+                slot.posX, slot.posY
             );
-            console.log(creature.get('name')+' -> mine('+mineX+':'+mineY+')');
             this.set('path', path);
         },
         getNextPosition: function(){

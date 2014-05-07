@@ -23,13 +23,11 @@ $(function(){
             return this.get('path');
         },
         selectPath: function(creature, base){
-            var baseX = base.getSlotX();
-            var baseY = base.getSlotY();
+            var slot = base.getRandomSlot();
             var path = app.game.getShortestPath(
                 creature.getPosX(), creature.getPosY(),
-                baseX, baseY
+                slot.posX, slot.posY
             );
-            console.log(creature.get('name')+' -> base('+baseX+':'+baseY+')');
             this.set('path', path);
         },
         getNextPosition: function(){

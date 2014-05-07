@@ -77,19 +77,16 @@ $(function(){
                     }
                 }
             }
-            // TODO: cause some blocking situations
-            // add big weight for mines tiles
             app.mines.each(function(mine){
-                for (var indX=mine.getPosX(); indX < mine.getMaxPosX(); indX++) {
-                    for (var indY=mine.getPosY(); indY < mine.getMaxPosY(); indY++) {
-                        initGraph[indX][indY] = 100;
+                for (var indX=mine.getPosX(); indX <= mine.getMaxPosX(); indX++) {
+                    for (var indY=mine.getPosY(); indY <= mine.getMaxPosY(); indY++) {
+                        initGraph[indX][indY] = 0;
                     }
                 }
             });
-            // add big weight for base tiles
-            for (var indX=app.base.getPosX(); indX < app.base.getMaxPosX(); indX++) {
-                for (var indY=app.base.getPosY(); indY < app.base.getMaxPosY(); indY++) {
-                    initGraph[indX][indY] = 100;
+            for (var indX=app.base.getPosX(); indX <= app.base.getMaxPosX(); indX++) {
+                for (var indY=app.base.getPosY(); indY <= app.base.getMaxPosY(); indY++) {
+                    initGraph[indX][indY] = 0;
                 }
             }
 
@@ -119,7 +116,6 @@ $(function(){
             return this;
         },
         isAvailableTile: function(x, y){
-
             // TODO : update graph  with mines, bases and other creatures, then use it to know traversable nodes
             var tiles = this.get('tiles');
             var tile = tiles[y][x];
